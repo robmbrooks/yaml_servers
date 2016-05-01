@@ -60,7 +60,7 @@ module YamlServers
 
   def self.get_config(path, defaults = {}, yaml_configs = [], localconf = "local.yaml")
     # get data from local.yaml
-    local_config = get_yaml("#{path}/#{localconf}",true)
+    local_config = get_yaml(File.join(path,localconf),true)
 
     # get additional configs set as include in local config
     yaml_configs = yaml_configs | (local_config.key?("include") ? local_config["include"] : [])
@@ -69,7 +69,7 @@ module YamlServers
     servers = {}
     config = {}
     yaml_configs.each do |yaml|
-      config = get_yaml("#{path}/#{yaml}",false)
+      config = get_yaml(File.join(path,yaml),false)
 
       # merge localconf defaults over top of lower precedence defaults
       config = config.deep_merge(local_config.reject { |key| key == "servers"} )
