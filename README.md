@@ -32,5 +32,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on Gitlab at https://gitlab.london.reporo.net/robb/yaml_servers.
+Bug reports and pull requests are welcome on Github at https://github.com/robmbrooks/yaml_servers.
 
