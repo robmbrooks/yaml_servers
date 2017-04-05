@@ -1,5 +1,10 @@
 source "https://rubygems.org"
-source 'https://gems.reporo.com'
 
-# Specify your gem's dependencies in yaml_servers.gemspec
-gemspec
+# Vagrant's special group
+group :plugins do
+  gemspec
+end
+
+group :development do
+  gem "vagrant", git: "https://github.com/mitchellh/vagrant.git"
+end
