@@ -4,7 +4,6 @@
 begin
   require 'vagrant'
 rescue LoadError
-  raise 'The Vagrant yaml_servers plugin must be run within Vagrant.'
 end
 
 require 'active_support'
