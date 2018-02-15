@@ -69,8 +69,10 @@ module YamlServers
       # collect servers from each yaml file applying defaults
       servers = {}
       config = {}
+      missing_ok = false
       yaml_configs.each do |yaml|
-        config = get_yaml(File.join(path,yaml),false)
+        config = get_yaml(File.join(path, yaml), missing_ok)
+        missing_ok = true
 
         # merge localconf defaults over top of lower precedence defaults
         config = config.deep_merge(local_config.reject { |key| key == "servers"} )
