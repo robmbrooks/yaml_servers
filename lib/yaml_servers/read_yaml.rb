@@ -49,7 +49,12 @@ module YamlServers
           return {}
         end
       elsif yaml.is_a?(Hash) and !yaml.key?("servers")
-        yaml = { "servers" => yaml }
+        /^(?<filebase>.*)\.yaml$/ =~ File.basename(yaml)
+        if filebase != 'local' then
+          yaml = { "servers" => { filebase => yaml } }
+        else
+          yaml = { "servers" => yaml }
+        end
       end
       return yaml ? yaml : {}
     end
