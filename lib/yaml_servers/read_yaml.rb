@@ -48,7 +48,7 @@ module YamlServers
           STDERR.puts err
           return {}
         end
-      elsif yaml.is_a?(Hash) and !yaml.key?("servers") and !missing_ok
+      elsif yaml.is_a?(Hash) and !yaml.key?("servers")
         yaml = { "servers" => yaml }
       end
       return yaml ? yaml : {}
