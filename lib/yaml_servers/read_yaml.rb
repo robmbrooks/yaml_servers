@@ -34,7 +34,11 @@ module YamlServers
       end
 
       begin
-        yaml = YAML::load(File.read(file))
+        if /\.json$/.match(file) then
+          yaml = JSON::load(File.read(file))
+        else
+          yaml = YAML::load(File.read(file))
+        end
       rescue => err
         STDERR.puts "Warning: #{file} not available"
         STDERR.puts err
@@ -49,7 +53,7 @@ module YamlServers
           return {}
         end
       elsif yaml.is_a?(Hash) and !yaml.key?("servers")
-        /^(?<filebase>.*)\.yaml$/ =~ File.basename(file)
+        /^(?<filebase>.*)\.(yaml|json)$/ =~ File.basename(file)
         if filebase != 'local' then
           yaml = { "servers" => { filebase => yaml } }
         else
