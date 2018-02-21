@@ -82,7 +82,7 @@ module YamlServers
         config = config.deep_merge(local_config.reject { |key| key == "servers"} )
 
         # get servers from config
-        servers.merge!(apply_defaults(config, defaults))
+        servers = servers.deep_merge!(apply_defaults(config, defaults))
       end
 
       # build new config hash with servers collected above and local config applied
