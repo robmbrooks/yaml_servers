@@ -75,7 +75,8 @@ module YamlServers
       config = {}
       missing_ok = false
       yaml_configs.each do |yaml|
-        config = get_yaml(File.join(path, yaml), missing_ok)
+        file = Pathname.new(yaml).relative? ? File.join(path, yaml) : yaml
+        config = get_yaml(file, yaml), missing_ok)
         missing_ok = true
 
         # merge localconf defaults over top of lower precedence defaults
