@@ -1,8 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require 'active_support'
-require 'active_support/core_ext'
+require 'deep_merge'
 require 'getoptlong'
 require 'json'
 require 'resolv'

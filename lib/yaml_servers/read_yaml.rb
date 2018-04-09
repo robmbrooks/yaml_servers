@@ -6,12 +6,12 @@ module YamlServers
 
     def self.apply_defaults(config, defaults)
       # merge defaults
-      config = defaults.deep_merge(config)
+      config = defaults.deep_merge!(config)
 
       # apply defaults to each server
       servers = {}
       config["servers"].each { |hostname, server|
-        servers[hostname] = config["default"].deep_merge(server.is_a?(Hash) ? server : { })
+        servers[hostname] = config["default"].dup.deep_merge!(server.is_a?(Hash) ? server : { })
         servers[hostname]["is_primary"] = (hostname == config["primary"])
         if servers[hostname].key?("ip") then
           begin
@@ -80,16 +80,16 @@ module YamlServers
         missing_ok = true
 
         # merge localconf defaults over top of lower precedence defaults
-        config = config.deep_merge(local_config.reject { |key| key == "servers"} )
+        config.deep_merge!(local_config.reject { |key| key == "servers"} )
 
         # get servers from config
-        servers = servers.deep_merge!(apply_defaults(config, defaults))
+        servers.deep_merge!(apply_defaults(config, defaults))
       end
 
       # build new config hash with servers collected above and local config applied
       config = { "servers" => servers, "primary" => config["primary"] }
-      config = defaults.deep_merge(config)
-      config = config.deep_merge(local_config)
+      config = defaults.dup.deep_merge!(config)
+      config.deep_merge!(local_config)
 
       # we need at least one server
       config["servers"] = { "default" => nil }  unless config.key?("servers")
