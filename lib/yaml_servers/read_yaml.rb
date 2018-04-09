@@ -53,7 +53,7 @@ module YamlServers
           return {}
         end
       elsif yaml.is_a?(Hash) and !yaml.key?("servers")
-        /^(?<filebase>.*)\.(yaml|json)$/ =~ File.basename(file)
+        filebase = File.basename(file, '.*')
         if filebase != 'local' then
           yaml = { "servers" => { filebase => yaml } }
         else
@@ -80,7 +80,7 @@ module YamlServers
         missing_ok = true
 
         # merge localconf defaults over top of lower precedence defaults
-        config.deep_merge!(local_config.reject { |key| key == "servers"} )
+        config.deep_merge!(local_config.reject { |key,value| key == "servers" } )
 
         # get servers from config
         servers.deep_merge!(apply_defaults(config, defaults))
