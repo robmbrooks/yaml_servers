@@ -23,6 +23,7 @@ module YamlServers
         end
         servers[hostname]["nfshome"] = File.expand_path(servers[hostname]["nfshome"]) if servers[hostname]["nfshome"]
         servers[hostname]["inline"] = servers[hostname]["inline"].lines.to_a if servers[hostname]["inline"].is_a?(String)
+        servers[hostname]["classes"] = servers[hostname]["classes"].lines.to_a.map(&:chomp) if servers[hostname]["classes"].is_a?(String)
       } if config.key?("servers")
 
       return servers
